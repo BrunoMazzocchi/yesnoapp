@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:yesno/presentation/widgets/incomming_message_bubble.dart';
+import 'package:yesno/presentation/widgets/my_message_bubble.dart';
 
 class ChatScreen extends StatelessWidget {
   const ChatScreen({super.key});
@@ -25,17 +27,6 @@ class ChatScreen extends StatelessWidget {
 class _ChatView extends StatelessWidget {
   const _ChatView();
 
-  Widget message (String text) {
-    // List tile that includes the message and current house at the bottom
-    return ListTile(
-      title: Text(text),
-      subtitle: const Text('12:00 PM'),
-      trailing: const CircleAvatar(
-        backgroundImage: NetworkImage('https://sm.ign.com/ign_nordic/cover/a/avatar-gen/avatar-generations_prsz.jpg'),
-      ),
-    );
-  }
-
   @override
   Widget build(BuildContext context) {
     return SafeArea(
@@ -44,8 +35,19 @@ class _ChatView extends StatelessWidget {
           Expanded(
             child: ListView.builder(
               itemCount: 10,
+              padding: const EdgeInsets.symmetric(horizontal: 10),
               itemBuilder: (context, index) {
-                return message("Message $index");
+                return (
+                  index.isEven
+                  ? const MyMessageBubble(
+                      message: 'Hello, how are you?',
+                      hour: '10:00',
+                    )
+                  : const IncommingMessageBubble(
+                      message: 'Hello, I am fine, thanks',
+                      hour: '10:00',
+                    )
+                );
               },
             ),
           ),
