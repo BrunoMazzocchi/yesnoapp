@@ -40,7 +40,7 @@ class IncommingMessageBubble extends StatelessWidget {
                       ),
                     ),
                     Text(
-                      message.text,
+                      message.timeStamp,
                       style: const TextStyle(
                         color: Colors.white,
                         fontSize: 10,

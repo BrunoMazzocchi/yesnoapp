@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:yesno/config/helpers/get_yes_no_answer.dart';
 import 'package:yesno/domain/entities/message.dart';
 
 class ChatProvider extends ChangeNotifier {
@@ -11,8 +12,20 @@ class ChatProvider extends ChangeNotifier {
 
   Future<void> addMessage(Message newMessage) async {
     message.add(newMessage);
+
+    if(newMessage.text.endsWith('?')) {
+      await getYesNoAnswer();
+    }
+
     moveToBottom();
     notifyListeners();
+  }
+
+  Future<void> getYesNoAnswer() async {
+    final message = await GetYesNoAnswer().getAnswer();
+    addMessage(message);
+    
+    moveToBottom();
   }
 
   void moveToBottom() {
