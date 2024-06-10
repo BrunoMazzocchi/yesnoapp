@@ -41,12 +41,13 @@ class _ChatView extends StatelessWidget {
         children: [
           Expanded(
             child: ListView.builder(
+              reverse: true,
               controller: chatProvider.chatScrollController,
-              itemCount: chatProvider.message.length,
+              itemCount: chatProvider.messages.length,
               padding: const EdgeInsets.symmetric(horizontal: 10),
               itemBuilder: (context, index) {
 
-                final message = chatProvider.message[index];
+                final message = chatProvider.messages[index];
 
                 return (message.from == FROM.bot
                     ? IncommingMessageBubble(
