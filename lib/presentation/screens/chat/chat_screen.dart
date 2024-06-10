@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:yesno/presentation/widgets/incomming_message_bubble.dart';
 import 'package:yesno/presentation/widgets/my_message_bubble.dart';
+import 'package:yesno/presentation/widgets/shared/message_field_box.dart';
 
 class ChatScreen extends StatelessWidget {
   const ChatScreen({super.key});
@@ -52,26 +53,7 @@ class _ChatView extends StatelessWidget {
             ),
           ),
           const Divider(height: 1),
-          Row(
-            children: [
-              IconButton(
-                icon: const Icon(Icons.camera_alt),
-                onPressed: () {},
-              ),
-              const Expanded(
-                child: TextField(
-                  decoration: InputDecoration(
-                    hintText: 'Type a message',
-                    border: InputBorder.none,
-                  ),
-                ),
-              ),
-              IconButton(
-                icon: const Icon(Icons.send),
-                onPressed: () {},
-              ),
-            ],
-          ),
+          const MessageFieldBox(),
         ],
       ),
     );

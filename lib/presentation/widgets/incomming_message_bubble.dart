@@ -1,3 +1,4 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 
 class IncommingMessageBubble extends StatelessWidget {
@@ -72,8 +73,13 @@ class _ImageBubble extends StatelessWidget {
         topRight: Radius.circular(12),
         bottomRight: Radius.circular(12),
       ),
-      child: Image.network(
-        'https://picsum.photos/250?image=9',
+      child: CachedNetworkImage(
+        imageUrl: 'https://picsum.photos/250?image=9',
+        progressIndicatorBuilder: (context, url, progress) => Center(
+          child: CircularProgressIndicator(
+            value: progress.progress,
+          ),
+        ), 
         width: size.width * 0.5,
         height: size.height * 0.2,
         fit: BoxFit.cover,
