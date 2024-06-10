@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:yesno/domain/entities/message.dart';
+import 'package:yesno/presentation/providers/chat_provider.dart';
 import 'package:yesno/presentation/widgets/incomming_message_bubble.dart';
 import 'package:yesno/presentation/widgets/my_message_bubble.dart';
 import 'package:yesno/presentation/widgets/shared/message_field_box.dart';
@@ -10,7 +13,7 @@ class ChatScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Bruno Mazzocchi'),
+        title: const Text('BOT'),
         centerTitle: false,
         leading: const Padding(
           padding:  EdgeInsets.all(8),
@@ -30,30 +33,41 @@ class _ChatView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+
+    final chatProvider = context.watch<ChatProvider>();
+
     return SafeArea(
       child: Column( 
         children: [
           Expanded(
             child: ListView.builder(
-              itemCount: 10,
+              controller: chatProvider.chatScrollController,
+              itemCount: chatProvider.message.length,
               padding: const EdgeInsets.symmetric(horizontal: 10),
               itemBuilder: (context, index) {
-                return (
-                  index.isEven
-                  ? const MyMessageBubble(
-                      message: 'Hello, how are you?',
-                      hour: '10:00',
-                    )
-                  : const IncommingMessageBubble(
-                      message: 'Hello, I am fine, thanks',
-                      hour: '10:00',
-                    )
-                );
+
+                final message = chatProvider.message[index];
+
+                return (message.from == FROM.bot
+                    ? IncommingMessageBubble(
+                        message: message,
+                      )
+                    : MyMessageBubble(
+                        message: message,
+                      ));
               },
             ),
           ),
           const Divider(height: 1),
-          const MessageFieldBox(),
+           MessageFieldBox(
+            onMessageSent: (message) {
+              chatProvider.addMessage(Message(
+                from: FROM.user,
+                text: message,
+                timeStamp: DateTime.now().toIso8601String(),
+              ));
+            },
+          ),
         ],
       ),
     );

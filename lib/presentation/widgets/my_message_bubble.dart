@@ -1,15 +1,13 @@
 import 'package:flutter/material.dart';
+import 'package:yesno/domain/entities/message.dart';
 
 class MyMessageBubble extends StatelessWidget {
-
-  final String message; 
-  final String hour; 
+  final Message message; 
   
 
   const MyMessageBubble({
     super.key,
     required this.message,
-    required this.hour,
   });
   
 
@@ -34,13 +32,13 @@ class MyMessageBubble extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.end,
               children: [
                 Text(
-                  message,
+                  message.text,
                   style: const TextStyle(
                     color: Colors.white,
                   ),
                 ),
                 Text(
-                  hour,
+                  message.timeStamp,
                   style: const TextStyle(
                     color: Colors.white,
                     fontSize: 10,

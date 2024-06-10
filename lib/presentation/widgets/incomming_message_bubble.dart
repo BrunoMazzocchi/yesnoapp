@@ -1,14 +1,13 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
+import 'package:yesno/domain/entities/message.dart';
 
 class IncommingMessageBubble extends StatelessWidget {
-  final String message; 
-  final String hour;
+  final Message message; 
   
   const IncommingMessageBubble({
     super.key,
     required this.message,
-    required this.hour,
   });
 
   @override
@@ -35,13 +34,13 @@ class IncommingMessageBubble extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
-                      message,
+                      message.text,
                       style: const TextStyle(
                         color: Colors.white,
                       ),
                     ),
                     Text(
-                      hour,
+                      message.text,
                       style: const TextStyle(
                         color: Colors.white,
                         fontSize: 10,
@@ -53,7 +52,9 @@ class IncommingMessageBubble extends StatelessWidget {
             ],
           ),
           const SizedBox(height: 10),
-          const _ImageBubble(),
+          _ImageBubble(
+            imageUrl: message.imageUrl!,
+          ),
         ],
       ),
     );
@@ -61,7 +62,10 @@ class IncommingMessageBubble extends StatelessWidget {
 }
 
 class _ImageBubble extends StatelessWidget {
-  const _ImageBubble();
+  final String imageUrl; 
+  const _ImageBubble({
+    required this.imageUrl,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -74,7 +78,7 @@ class _ImageBubble extends StatelessWidget {
         bottomRight: Radius.circular(12),
       ),
       child: CachedNetworkImage(
-        imageUrl: 'https://picsum.photos/250?image=9',
+        imageUrl: imageUrl,
         progressIndicatorBuilder: (context, url, progress) => Center(
           child: CircularProgressIndicator(
             value: progress.progress,
